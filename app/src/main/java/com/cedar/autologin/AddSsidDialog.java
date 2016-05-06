@@ -15,17 +15,17 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class AddSsidDialog extends DialogFragment {
-	
-	FragmentManager fm;
-	onDlgListClick mCallback;
-	
+
+    FragmentManager fm;
+    onDlgListClick mCallback;
+
     public static AddSsidDialog newInstance() {
-    	AddSsidDialog frag = new AddSsidDialog();
+        AddSsidDialog frag = new AddSsidDialog();
         return frag;
     }
-    
 
-	public interface onDlgListClick{
+
+    public interface onDlgListClick {
         public void addSsid(String ssid);
     }
 
@@ -45,43 +45,43 @@ public class AddSsidDialog extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_ssid, container);
-        
-        getDialog().setTitle("Ìí¼ÓSSID");
-        
+
+        getDialog().setTitle("æ·»åŠ SSID");
+
         Button selectButton = (Button) view.findViewById(R.id.button_select);
-		selectButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				WifiListFragment wifiFragment = new WifiListFragment();
-				wifiFragment.dlg = getDialog();
-				wifiFragment.show(fm, "show wifi list");
-			}
-		});
-		
-		final EditText ssidText = (EditText) view.findViewById(R.id.ssidText);
-		
-		Button OkButton = (Button) view.findViewById(R.id.button_ok);
-		OkButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				mCallback.addSsid(ssidText.getText().toString());
-				getDialog().dismiss();
-			}
-		});
-        
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                WifiListFragment wifiFragment = new WifiListFragment();
+                wifiFragment.dlg = getDialog();
+                wifiFragment.show(fm, "show wifi list");
+            }
+        });
+
+        final EditText ssidText = (EditText) view.findViewById(R.id.ssidText);
+
+        Button OkButton = (Button) view.findViewById(R.id.button_ok);
+        OkButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mCallback.addSsid(ssidText.getText().toString());
+                getDialog().dismiss();
+            }
+        });
+
         return view;
     }
-    
+
     @Override
     public void onStop() {
-        if( getActivity() != null) {
-            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (getActivity() != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             View v = getActivity().getCurrentFocus();
             Window w = getActivity().getWindow();
-            if (v != null) 
-            	imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            if (v != null)
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             if (w != null)
-            	w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+                w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
         super.onStop();
     }

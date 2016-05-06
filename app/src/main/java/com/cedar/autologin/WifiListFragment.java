@@ -15,13 +15,13 @@ import android.support.v4.app.DialogFragment;
 
 public class WifiListFragment extends DialogFragment {
 
-	onDlgListClick mCallback;
-	
-	Dialog dlg = null;
-	
-	ArrayList<String> connections = new ArrayList<String>();
+    onDlgListClick mCallback;
 
-	public interface onDlgListClick{
+    Dialog dlg = null;
+
+    ArrayList<String> connections = new ArrayList<String>();
+
+    public interface onDlgListClick {
         public void addSsid(String ssid);
     }
 
@@ -38,16 +38,16 @@ public class WifiListFragment extends DialogFragment {
                     + " must implement addSsid");
         }
     }
-    
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-    	WifiManager mainWifi = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
-		List<ScanResult> wifiList = mainWifi.getScanResults();
-   	 	for(int i = 0; i < wifiList.size(); i++) {
-   	 		String ssid = wifiList.get(i).SSID;
-   	 		if (!(ssid.equals("")) && !connections.contains(ssid))
-   	 			connections.add(wifiList.get(i).SSID);
+        WifiManager mainWifi = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+        List<ScanResult> wifiList = mainWifi.getScanResults();
+        for (int i = 0; i < wifiList.size(); i++) {
+            String ssid = wifiList.get(i).SSID;
+            if (!(ssid.equals("")) && !connections.contains(ssid))
+                connections.add(wifiList.get(i).SSID);
         }
 
         return new AlertDialog.Builder(getActivity())
@@ -55,11 +55,11 @@ public class WifiListFragment extends DialogFragment {
                 .setItems(connections.toArray(new String[connections.size()]), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
 
-                    	mCallback.addSsid(connections.get(item));
-                        getDialog().dismiss(); 
+                        mCallback.addSsid(connections.get(item));
+                        getDialog().dismiss();
                         WifiListFragment.this.dismiss();
                         if (dlg != null)
-                        	dlg.dismiss();
+                            dlg.dismiss();
 
                     }
                 }).create();
